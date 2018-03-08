@@ -31,7 +31,7 @@ public class MyBATISClienteDao implements ClienteDAO{
     @Override
     public Cliente load(int id) throws PersistenceException {
         try{
-            clientem.consultarCliente(id);
+            return clientem.consultarCliente(id);
         }catch(org.apache.ibatis.exceptions.PersistenceException e){
             throw new UnsupportedOperationException("Not supported yet.");
         } 

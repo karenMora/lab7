@@ -15,6 +15,7 @@ import com.oracle.webservices.internal.api.message.MessageContextFactory;
 import edu.eci.pdsw.sampleprj.dao.ClienteDAO;
 import edu.eci.pdsw.sampleprj.dao.mybatis.MyBATISItemDAO;
 import edu.eci.pdsw.sampleprj.dao.ItemDAO;
+import edu.eci.pdsw.sampleprj.dao.mybatis.MyBATISClienteDao;
 import edu.eci.pdsw.sampleprj.dao.mybatis.MyBATISItemDAO;
 
 
@@ -40,7 +41,7 @@ public class ServiciosAlquilerFactory {
                 setClassPathResource(pathResource);
                 bind(ServiciosAlquiler.class).to(ServiciosAlquilerItemsImpl.class);
                 bind(ItemDAO.class).to(MyBATISItemDAO.class);
-                bind(ClienteDAO.class).to(MyBATISClienteDAO.class);
+                bind(ClienteDAO.class).to(MyBATISClienteDao.class);
             }
         });
         return inj;
