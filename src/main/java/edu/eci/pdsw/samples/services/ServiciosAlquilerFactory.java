@@ -11,6 +11,11 @@ import org.mybatis.guice.XMLMyBatisModule;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 import static com.google.inject.Guice.createInjector;
+import com.oracle.webservices.internal.api.message.MessageContextFactory;
+import edu.eci.pdsw.sampleprj.dao.ClienteDAO;
+import edu.eci.pdsw.sampleprj.dao.mybatis.MyBATISItemDAO;
+import edu.eci.pdsw.sampleprj.dao.ItemDAO;
+import edu.eci.pdsw.sampleprj.dao.mybatis.MyBATISItemDAO;
 
 
 /**
@@ -24,21 +29,28 @@ public class ServiciosAlquilerFactory {
     private static Injector injector;
 
     private static Injector testInjector;
+    
+    private static Injector inj;
 
     private Injector myBatisInjector(String pathResource) {
-        return createInjector(new XMLMyBatisModule() {
+        inj = createInjector(new XMLMyBatisModule() {
             @Override
             protected void initialize() {
+                install(JdbcHelper.MySQL);
                 setClassPathResource(pathResource);
                 bind(ServiciosAlquiler.class).to(ServiciosAlquilerItemsImpl.class);
+                bind(ItemDAO.class).to(MyBATISItemDAO.class);
+                bind(ClienteDAO.class).to(MyBATISClienteDAO.class);
             }
         });
+        return inj;
     }
 
     private ServiciosAlquilerFactory(){
-
+        
         injector = myBatisInjector("mybatis-config.xml");
         testInjector = myBatisInjector("mybatis-config-h2.xml");
+        
     }
 
     public ServiciosAlquiler getServiciosAlquiler(){
