@@ -10,6 +10,7 @@ import edu.eci.pdsw.sampleprj.dao.PersistenceException;
 import edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import com.google.inject.Inject;
 import edu.eci.pdsw.samples.entities.Cliente;
+import java.util.List;
 
 /**
  *
@@ -36,5 +37,11 @@ public class MyBATISClienteDao implements ClienteDAO{
             throw new UnsupportedOperationException("Not supported yet.");
         } 
     }
+
+    @Override
+    public List<Cliente> load() throws PersistenceException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }

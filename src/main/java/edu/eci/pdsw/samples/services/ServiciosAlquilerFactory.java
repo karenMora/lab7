@@ -11,7 +11,7 @@ import org.mybatis.guice.XMLMyBatisModule;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 import static com.google.inject.Guice.createInjector;
-import com.oracle.webservices.internal.api.message.MessageContextFactory;
+//import com.oracle.webservices.internal.api.message.MessageContextFactory;
 import edu.eci.pdsw.sampleprj.dao.ClienteDAO;
 import edu.eci.pdsw.sampleprj.dao.mybatis.MyBATISItemDAO;
 import edu.eci.pdsw.sampleprj.dao.ItemDAO;
@@ -33,8 +33,9 @@ public class ServiciosAlquilerFactory {
     
     private static Injector inj;
 
+    /*
     private Injector myBatisInjector(String pathResource) {
-        inj = createInjector(new XMLMyBatisModule() {
+        return createInjector(new XMLMyBatisModule() {
             @Override
             protected void initialize() {
                 install(JdbcHelper.MySQL);
@@ -44,13 +45,34 @@ public class ServiciosAlquilerFactory {
                 bind(ClienteDAO.class).to(MyBATISClienteDao.class);
             }
         });
-        return inj;
-    }
+    }*/
 
     private ServiciosAlquilerFactory(){
         
-        injector = myBatisInjector("mybatis-config.xml");
-        testInjector = myBatisInjector("mybatis-config-h2.xml");
+        //injector = myBatisInjector("mybatis-config.xml");
+        //testInjector = myBatisInjector("mybatis-config-h2.xml");
+        
+        injector=createInjector(new XMLMyBatisModule() {
+            @Override
+            protected void initialize() {
+                install(JdbcHelper.MySQL);
+                setClassPathResource("mybatis-config.xml");
+                bind(ServiciosAlquiler.class).to(ServiciosAlquilerItemsImpl.class);
+                bind(ItemDAO.class).to(MyBATISItemDAO.class);
+                bind(ClienteDAO.class).to(MyBATISClienteDao.class);
+            }
+        });
+        
+        testInjector=createInjector(new XMLMyBatisModule() {
+            @Override
+            protected void initialize() {
+                install(JdbcHelper.MySQL);
+                setClassPathResource("mybatis-config-h2.xml");
+                bind(ServiciosAlquiler.class).to(ServiciosAlquilerItemsImpl.class);
+                bind(ItemDAO.class).to(MyBATISItemDAO.class);
+                bind(ClienteDAO.class).to(MyBATISClienteDao.class);
+            }
+        });
         
     }
 

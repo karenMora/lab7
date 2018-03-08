@@ -14,8 +14,24 @@
     <result property='formatoRenta' column="formatoRenta"></result>
     <result property='genero;' column="genero;"></result>
     <association property='tipo' javaType='Item' columnPrefix='Item_'></association>    
-    
 </resultMap
+
+<resultMap type='Cliente' id='ClienteResult'>
+    <id property='documento' column="documento"></id>
+    <result property='nombre' column="nombre"></result>
+    <result property='telefono' column="telefono"></result>
+    <result property='direccion' column="direccion"></result>
+    <result property='email' column="email"></result>
+    <result property='vetado' column="vetado"></result>
+    <!-- <collection property='vetado' column="vetado"></association>  aun no estan los items prestados-->
+    <!---  -->
+    <!---<collection property='rentados' ofType='ItemRentado' resultMap='ItemRentadoResult' columnPrefix='ItemRentado_'></collection> -->
+
+</resultMap>
+
+<insert id="insertarItem" parameterType="map" useGeneratedKeys="true">
+    INSERT INTO VI_CLIENTES VALUES(#{item.tipo},#{item.id},#{item.nombre},#{item.descripcion},#{item.fechaLanzamiento},#{item.tarifaxDia},#{item.formatoRenta},#{item.genero})
+</insert>
 
 <select parameterType="map" id="consultarClientes" resultMap="ClienteResult">
     select
@@ -48,5 +64,5 @@
     left join VI_ITEMS as i on ir.ITEMS_id=i.id 
     left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id 
 </select>
-    
+
 </mapper>
