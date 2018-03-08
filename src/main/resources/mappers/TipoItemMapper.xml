@@ -5,5 +5,42 @@
   
 <mapper namespace="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.TipoItemMapper">
 
+<resultMap type='TipoIem' id='TipoIemResult'>
+    <id property='id' column="id"></id>
+    <result property="descripcion" column="descripcion"></result>
+    <association property='TipoIem' javaType="ItTipoIemem" columnPrefix="TipoIem_"></association>
+</resultMap
+
+<select parameterType="map" id="consultarClientes" resultMap="ClienteResult">
+    select
+    
+    c.nombre,
+    c.documento,
+    c.telefono,
+    c.direccion,
+    c.email,
+    c.vetado,
+    
+    ir.id as ItemRentado_id,
+    ir.fechainiciorenta as ItemRentado_fechainiciorenta,
+    ir.fechafinrenta as ItemRentado_fechafinrenta,
+    
+    i.id as Item_id,
+    i.nombre as Item_nombre,
+    i.descripcion as Item_descripcion,
+    i.fechalanzamiento as Item_fechalanzamiento,
+    i.tarifaxdia as Item_tarifaxdia,
+    i.formatorenta as Item_formatorenta,
+    i.genero as Item_genero,
+    
+    ti.id as TipoItem_id,
+    ti.descripcion as TipoItem_descripcion
+
+    
+    FROM VI_CLIENTES as c 
+    left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento 
+    left join VI_ITEMS as i on ir.ITEMS_id=i.id 
+    left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id 
+</select>
        
 </mapper>
