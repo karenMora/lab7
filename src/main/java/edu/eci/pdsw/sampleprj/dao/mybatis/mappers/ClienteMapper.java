@@ -31,4 +31,7 @@ public interface ClienteMapper {
      */
     public List<Cliente> consultarClientes();
     
+    public Cliente consultarClientes(int id);
+    
+    public void insertarCliente(Cliente cliete);
 }
